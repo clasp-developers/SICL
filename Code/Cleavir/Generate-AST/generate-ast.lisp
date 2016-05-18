@@ -397,8 +397,12 @@
 ;;; This function is called when we have processed a possible
 ;;; &OPTIONAL parameter, so if there is a &REST parameter, it should
 ;;; be processed by this function.
+;;; Modified by Christian Schafmeister May 18, 2016 to
+;;; generate the proper synonym of &rest that the user provided
+;;; using the cleavir-code-utilities:rest-name accessor
 (defun process-rest (parsed-lambda-list idspecs body env system)
-  (let ((rest (cleavir-code-utilities:rest-body parsed-lambda-list)))
+  (let ((rest (cleavir-code-utilities:rest-body parsed-lambda-list))
+        (rest-name (cleavir-code-utilities:rest-name parsed-lambda-list)))
     (if (eq rest :none)
 	;; There was no lambda-list keyword &REST or &BODY in this
 	;; lambda list.  Just call the function PROCESS-KEYS to create
@@ -434,7 +438,7 @@
 		   (lexical-ast (cleavir-ast:make-lexical-ast name)))
 	      (values (set-or-bind-variable
 		       rest lexical-ast next-ast new-env system)
-		      (list* '&rest lexical-ast next-lexical-parameters))))))))
+		      (list* rest-name #|'&rest|# lexical-ast next-lexical-parameters))))))))
 
 (defun process-remaining-optionals
     (optionals parsed-lambda-list idspecs body env system)

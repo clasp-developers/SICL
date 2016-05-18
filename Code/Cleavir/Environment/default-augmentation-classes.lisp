@@ -21,7 +21,7 @@
 ;;; instance has a NEXT slot that refers to the less specific
 ;;; environment.  The chain ends with a reference to an object
 ;;; representing the global environment.  Implementations that do not
-;;; have first-class global environments must still create a dummy
+;;; have first-class lobal environments must still create a dummy
 ;;; class that represents their particular global environment.
 (defclass entry ()
   ((%next :initarg :next :reader next)))
