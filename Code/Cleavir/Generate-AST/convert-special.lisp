@@ -633,13 +633,13 @@
 (defmethod convert-special
     ((symbol (eql 'return-from)) form env system)
   (db origin (return-from block-name . rest) form
-    (declare (ignore return-from))
-    (let ((info (block-info env block-name))
-	  (value-form (if (null rest) nil (first rest))))
-      (cleavir-ast:make-return-from-ast
-       (cleavir-env:identity info)
-       (convert value-form env system)
-       :origin origin))))
+      (declare (ignore return-from))
+      (let ((info (block-info env block-name))
+            (value-form (if (null rest) nil (first rest))))
+        (cleavir-ast:make-return-from-ast
+         (cleavir-env:identity info)
+         (convert value-form env system)
+         :origin origin))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
