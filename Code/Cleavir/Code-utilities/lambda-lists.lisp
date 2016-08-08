@@ -98,7 +98,7 @@
 (defun check-lambda-list-not-circular (lambda-list)
   (when (eq (nth-value 1 (list-structure lambda-list)) :circular)
     (error 'lambda-list-must-not-be-circular
-	   :signaler 
+	   :signaler 'check-lambda-list-not-circular #|There was nothing here before meister Aug 2016|#
 	   :code lambda-list)))
 
 ;;; Use this function for lambda lists that must be proper lists.
