@@ -9,4 +9,6 @@
   (:export #:infer-types #:arc-bag
 	   #:instruction-input #:find-type
            #:delete-the
-           #:prune-typeqs))
+           #:prune-typeqs)
+  (:export #:type-missing
+	   #:type-missing-location #:type-missing-bag))

@@ -211,7 +211,10 @@
 		       new-env canonicalized-dspecs)))
 	(process-progn
 	 (append init-asts
-		 (convert-sequence forms new-env system)))))))
+		 ;; so that flet with empty body works.
+		 (list
+		  (process-progn
+		   (convert-sequence forms new-env system)))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -361,8 +364,11 @@
 	     (inner-env (augment-environment-with-declarations
 			 inner-env canonicalized-dspecs)))
 	(process-progn
-	 (append init-asts
-		 (convert-sequence forms inner-env system)))))))
+	 (append
+	  init-asts
+	  (list
+	   (process-progn
+	    (convert-sequence forms inner-env system)))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -627,13 +633,13 @@
 (defmethod convert-special
     ((symbol (eql 'return-from)) form env system)
   (db origin (return-from block-name . rest) form
-      (declare (ignore return-from))
-      (let ((info (block-info env block-name))
-            (value-form (if (null rest) nil (first rest))))
-        (cleavir-ast:make-return-from-ast
-         (cleavir-env:identity info)
-         (convert value-form env system)
-         :origin origin))))
+    (declare (ignore return-from))
+    (let ((info (block-info env block-name))
+	  (value-form (if (null rest) nil (first rest))))
+      (cleavir-ast:make-return-from-ast
+       (cleavir-env:identity info)
+       (convert value-form env system)
+       :origin origin))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -764,7 +770,7 @@
 
 (defmethod convert-special
     ((symbol (eql 'the)) form environment system)
-  (db origin (the value-type subform) form #|(rest form)|#
+  (db origin (the value-type subform) form
     (declare (ignore the))
     (multiple-value-bind (req opt rest restp)
 	(parse-values-type value-type)
