@@ -3,8 +3,8 @@
 (defun bag-join (&rest bags)
   (when (null bags)
     (return-from bag-join nil)) ; an empty bag.
-  (loop for b in bags
-	do (assert (valid-bag-p b)))
+  #+(or)(loop for b in bags
+           do (assert (valid-bag-p b)))
   (loop for (lexical . type-descriptor) in (first bags)
 	collect
 	(cons lexical
