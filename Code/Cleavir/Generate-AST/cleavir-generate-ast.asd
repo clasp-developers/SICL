@@ -6,7 +6,10 @@
 	       :cleavir-primop
 	       :cleavir-code-utilities
 	       :cleavir-environment
+<<<<<<< HEAD
 	       :cleavir-compilation-policy
+=======
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
                :acclimation)
   :serial t
   :components

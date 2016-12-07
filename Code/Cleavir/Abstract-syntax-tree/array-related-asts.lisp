@@ -63,9 +63,15 @@
        ())
 
      (defun ,simple-reader-class-constructor-name
+<<<<<<< HEAD
 	 (array-ast index-ast &key origin (policy *policy*))
        (make-instance ',simple-reader-class-name
 	 :origin origin :policy policy
+=======
+	 (array-ast index-ast &key origin)
+       (make-instance ',simple-reader-class-name
+	 :origin origin
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	 :array-ast array-ast
 	 :index-ast index-ast))
 
@@ -73,9 +79,15 @@
        ())
 
      (defun ,simple-writer-class-constructor-name
+<<<<<<< HEAD
 	 (array-ast index-ast element-ast &key origin (policy *policy*))
        (make-instance ',simple-writer-class-name
 	 :origin origin :policy policy
+=======
+	 (array-ast index-ast element-ast &key origin)
+       (make-instance ',simple-writer-class-name
+	 :origin origin
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	 :array-ast array-ast
 	 :index-ast index-ast
 	 :element-ast element-ast))
@@ -84,9 +96,15 @@
        ())
 
      (defun ,non-simple-reader-class-constructor-name
+<<<<<<< HEAD
 	 (array-ast index-ast &key origin (policy *policy*))
        (make-instance ',non-simple-reader-class-name
 	 :origin origin :policy policy
+=======
+	 (array-ast index-ast &key origin)
+       (make-instance ',non-simple-reader-class-name
+	 :origin origin
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	 :array-ast array-ast
 	 :index-ast index-ast))
 
@@ -94,9 +112,15 @@
        ())
 
      (defun ,non-simple-writer-class-constructor-name
+<<<<<<< HEAD
 	 (array-ast index-ast element-ast &key origin (policy *policy*))
        (make-instance ',non-simple-writer-class-name
 	 :origin origin :policy policy
+=======
+	 (array-ast index-ast element-ast &key origin)
+       (make-instance ',non-simple-writer-class-name
+	 :origin origin
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	 :array-ast array-ast
 	 :index-ast index-ast
 	 :element-ast element-ast))))

@@ -183,7 +183,16 @@
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
 (defmethod translate-simple-instruction
+<<<<<<< HEAD
     ((instruction cleavir-ir:non-simple-t-aref-instruction) inputs outputs)
+=======
+    ((instruction cleavir-ir:simple-bit-aref-instruction) inputs outputs)
+  `(setq ,(first outputs)
+	 (row-major-aref ,(first inputs) ,(second inputs))))
+
+(defmethod translate-simple-instruction
+    ((instruction cleavir-ir:non-simple-bit-aref-instruction) inputs outputs)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
   `(setq ,(first outputs)
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
@@ -193,24 +202,55 @@
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
 (defmethod translate-simple-instruction
+<<<<<<< HEAD
     ((instruction cleavir-ir:non-simple-bit-aref-instruction) inputs outputs)
+=======
+    ((instruction cleavir-ir:simple-short-float-aref-instruction) inputs outputs)
   `(setq ,(first outputs)
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
 (defmethod translate-simple-instruction
+    ((instruction cleavir-ir:simple-single-float-aref-instruction) inputs outputs)
+  `(setq ,(first outputs)
+	 (row-major-aref ,(first inputs) ,(second inputs))))
+
+(defmethod translate-simple-instruction
+    ((instruction cleavir-ir:non-simple-single-float-aref-instruction) inputs outputs)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
+  `(setq ,(first outputs)
+	 (row-major-aref ,(first inputs) ,(second inputs))))
+
+(defmethod translate-simple-instruction
+<<<<<<< HEAD
     ((instruction cleavir-ir:simple-unsigned-byte-8-aref-instruction)
      inputs outputs)
+=======
+    ((instruction cleavir-ir:simple-double-float-aref-instruction) inputs outputs)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
   `(setq ,(first outputs)
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
 (defmethod translate-simple-instruction
+<<<<<<< HEAD
     ((instruction cleavir-ir:non-simple-unsigned-byte-8-aref-instruction)
      inputs outputs)
+=======
+    ((instruction cleavir-ir:non-simple-double-float-aref-instruction) inputs outputs)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
   `(setq ,(first outputs)
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
 (defmethod translate-simple-instruction
+<<<<<<< HEAD
     ((instruction cleavir-ir:simple-short-float-aref-instruction) inputs outputs)
+=======
+    ((instruction cleavir-ir:simple-long-float-aref-instruction) inputs outputs)
+  `(setq ,(first outputs)
+	 (row-major-aref ,(first inputs) ,(second inputs))))
+
+(defmethod translate-simple-instruction
+    ((instruction cleavir-ir:non-simple-long-float-aref-instruction) inputs outputs)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
   `(setq ,(first outputs)
 	 (row-major-aref ,(first inputs) ,(second inputs))))
 
@@ -289,6 +329,36 @@
 	 ,(third inputs)))
 
 (defmethod translate-simple-instruction
+<<<<<<< HEAD
+    ((instruction cleavir-ir:simple-single-float-aset-instruction) inputs outputs)
+=======
+    ((instruction cleavir-ir:simple-bit-aset-instruction) inputs outputs)
+  (declare (ignore outputs))
+  `(setf (row-major-aref ,(first inputs) ,(second inputs))
+	 ,(third inputs)))
+
+(defmethod translate-simple-instruction
+    ((instruction cleavir-ir:non-simple-bit-aset-instruction) inputs outputs)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
+  (declare (ignore outputs))
+  `(setf (row-major-aref ,(first inputs) ,(second inputs))
+	 ,(third inputs)))
+
+(defmethod translate-simple-instruction
+    ((instruction cleavir-ir:non-simple-single-float-aset-instruction) inputs outputs)
+  (declare (ignore outputs))
+  `(setf (row-major-aref ,(first inputs) ,(second inputs))
+	 ,(third inputs)))
+
+(defmethod translate-simple-instruction
+<<<<<<< HEAD
+=======
+    ((instruction cleavir-ir:simple-short-float-aset-instruction) inputs outputs)
+  (declare (ignore outputs))
+  `(setf (row-major-aref ,(first inputs) ,(second inputs))
+	 ,(third inputs)))
+
+(defmethod translate-simple-instruction
     ((instruction cleavir-ir:simple-single-float-aset-instruction) inputs outputs)
   (declare (ignore outputs))
   `(setf (row-major-aref ,(first inputs) ,(second inputs))
@@ -301,6 +371,7 @@
 	 ,(third inputs)))
 
 (defmethod translate-simple-instruction
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
     ((instruction cleavir-ir:simple-double-float-aset-instruction) inputs outputs)
   (declare (ignore outputs))
   `(setf (row-major-aref ,(first inputs) ,(second inputs))

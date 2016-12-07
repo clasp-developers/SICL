@@ -209,6 +209,7 @@
 (define-condition lambda-call-first-symbol-not-lambda
     (compilation-program-error)
   ())
+<<<<<<< HEAD
 
 ;;; This condition is signaled when a function of known type is
 ;;; called with too many arguments.
@@ -243,3 +244,5 @@
 (define-condition odd-keyword-portion-style-warning
     (odd-keyword-portion argument-mismatch-style-warning)
   ())
+=======
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b

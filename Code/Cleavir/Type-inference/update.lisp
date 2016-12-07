@@ -5,6 +5,7 @@
 	(remove location bag
 		:test #'eq :key #'first)))
 
+<<<<<<< HEAD
 ;;; if you are seeing this error and looking for the cause:
 ;;; compute-initial-dictionary should give every location a type of
 ;;;  T in every arc that location is live in. It is not doing so.
@@ -24,6 +25,11 @@ This is probably an internal bug in type inference (or related systems, e.g. liv
       (if a
           (cdr a)
           (error 'type-missing :location location :bag bag)))))
+=======
+(defgeneric find-type (location bag)
+  (:method (location bag)
+    (cdr (assoc location bag :test #'eq))))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 (defmethod find-type
     ((location cleavir-ir:constant-input) bag)
   (declare (ignore bag))

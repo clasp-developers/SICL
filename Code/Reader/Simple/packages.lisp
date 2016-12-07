@@ -33,7 +33,10 @@
    #:read-preserving-whitespace
    #:read-common
    #:call-reader-macro
+<<<<<<< HEAD
    #:interpret-token
+=======
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
    #:make-dispatch-macro-character
    #:set-dispatch-macro-character
    #:get-dispatch-macro-character

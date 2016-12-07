@@ -14,8 +14,12 @@
 	(result (make-dictionary)))
     (cleavir-ir:map-instructions-arbitrary-order
      (lambda (instruction)
+<<<<<<< HEAD
        (loop for predecessor in (remove-duplicates
 				 (cleavir-ir:predecessors instruction))
+=======
+       (loop for predecessor in (remove-duplicates (cleavir-ir:predecessors instruction))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	     for live = (cleavir-liveness:live-before liveness instruction)
 	     do (loop for var in live
 		      when (typep var 'cleavir-ir:lexical-location)

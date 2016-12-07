@@ -211,10 +211,14 @@
 		       new-env canonicalized-dspecs)))
 	(process-progn
 	 (append init-asts
+<<<<<<< HEAD
 		 ;; so that flet with empty body works.
 		 (list
 		  (process-progn
 		   (convert-sequence forms new-env system)))))))))
+=======
+		 (convert-sequence forms new-env system)))))))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -364,11 +368,16 @@
 	     (inner-env (augment-environment-with-declarations
 			 inner-env canonicalized-dspecs)))
 	(process-progn
+<<<<<<< HEAD
 	 (append
 	  init-asts
 	  (list
 	   (process-progn
 	    (convert-sequence forms inner-env system)))))))))
+=======
+	 (append init-asts
+		 (convert-sequence forms inner-env system)))))))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -750,7 +759,13 @@
     (let ((tag-asts
 	    (loop for item in (raw items)
 		  for raw-item = (raw item)
+<<<<<<< HEAD
 		  when (tagp raw-item)
+=======
+		  ;; go tags are symbols or integers, per CLHS glossary.
+		  when (or (symbolp raw-item)
+			   (integerp raw-item))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 		    collect (cleavir-ast:make-tag-ast
 			     raw-item
 			     :origin (location item))))
@@ -773,7 +788,11 @@
 
 (defmethod convert-special
     ((symbol (eql 'the)) form environment system)
+<<<<<<< HEAD
   (db origin (the value-type subform) form
+=======
+  (db origin (the value-type subform) form #|(rest form)|#
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
     (declare (ignore the))
     (multiple-value-bind (req opt rest restp)
 	(parse-values-type value-type)

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/bash
+=======
+#!/bin/sh
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 
 #set -x
 TEXFILES=$(./strip-dependence inputtex $1)

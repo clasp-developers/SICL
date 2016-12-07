@@ -238,6 +238,7 @@
           form was found:~@
           ~s"
           (expr condition)))
+<<<<<<< HEAD
 
 ;; Helper for below.
 
@@ -289,3 +290,5 @@
      (language acclimation:english))
   (format stream
 	  " as inferred from its inline definition."))
+=======
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b

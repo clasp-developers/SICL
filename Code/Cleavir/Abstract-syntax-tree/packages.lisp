@@ -161,7 +161,16 @@
    #:make-non-simple-unsigned-byte-16-aref-ast
    #:non-simple-unsigned-byte-16-aset-ast
    #:make-non-simple-unsigned-byte-16-aset-ast
+<<<<<<< HEAD
    #:child-ast
+=======
+   #:optimize-ast #:child-ast
+   #:speed-ast #:make-speed-ast
+   #:space-ast #:make-space-ast
+   #:debug-ast #:make-debug-ast
+   #:safety-ast #:make-safety-ast
+   #:compilation-speed-ast #:make-compilation-speed-ast
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
    #:scope-ast #:make-scope-ast
    #:map-ast-depth-first-preorder
    ))

@@ -81,9 +81,15 @@ Similarly, whether a special version (possibly
 implementation-specific) of \texttt{aref} is required also depends on
 the implementation.
 
+<<<<<<< HEAD
 Not only, do we now have implementation-specific code, but we also
 have a maintenance problem.  The loop will have to be duplicated for
 each sequence function, and for every specific type that the
+=======
+Not only, do we know have implementation-specific code, but we also
+have a maintenance problem.  The loop will have to be duplicated for
+each sequence function, and for all specific type that the
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 implementation can handle.  This duplication requires separate tests
 for each case so as to guarantee as much coverage as possible.  Given
 the number of combinations of types, plus the additional parameters we
@@ -96,7 +102,11 @@ of duplicating the loop:
 {\small\begin{verbatim}
 (defmacro with-vector-type (vector-var &body body)
   `(macrolet ((vref (array index)
+<<<<<<< HEAD
                 `(aref ,array ,index)))
+=======
+                `(aref (,array ,index))))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
      (if (typep ,vector-var 'simple-byte-vector)
          (locally (declare (type simple-byte-vector
                                  ,vector-var))
@@ -129,6 +139,7 @@ like this:
           when (eql item element)
             return element)))
 \end{verbatim}}
+<<<<<<< HEAD
 
 We notice a couple of essential properties of this code:
 
@@ -186,3 +197,5 @@ introducing the following macro:
           when (eql item element)
             return element))
 \end{verbatim}}
+=======
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b

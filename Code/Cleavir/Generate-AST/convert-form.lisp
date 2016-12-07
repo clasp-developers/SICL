@@ -143,7 +143,11 @@ If AST is already a THE-AST, collapses both into one."
 
 (defmethod convert-form
     (form (info cleavir-env:local-function-info) env system)
+<<<<<<< HEAD
   (make-call form info env (cdr form) system))
+=======
+  (make-call info env (cdr form) system))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -201,16 +205,24 @@ If AST is already a THE-AST, collapses both into one."
 
 ;; assumes ftype is valid!
 (defun maybe-type-wrap-arguments (ftype-ll arg-asts)
+<<<<<<< HEAD
   "Given the lambda list of a function's ftype, and a list of ASTs in a call to that function, returns a list of ASTs possibly wrapped in THE-ASTs, based on the ftype.
 If the call is invalid, returns like inline-lambda-init."
+=======
+  "Given the lambda list of a function's ftype, and a list of ASTs in a call to that function, returns a list of ASTs possibly wrapped in THE-ASTs, based on the ftype."
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
   (loop with state = :required
 	for param in ftype-ll
 	when (find param '(&optional &rest &key))
 	  do (setf state param)
 	else when (eq state :required)
 	       when (null arg-asts)
+<<<<<<< HEAD
 		 do (return
 		      (values nil 'not-enough-arguments-warning))
+=======
+		 do (return (values nil 'not-enough-arguments))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	       else collect (maybe-wrap-the param (first arg-asts))
 		      into result
 		    and do (setf arg-asts (rest arg-asts))
@@ -232,6 +244,7 @@ If the call is invalid, returns like inline-lambda-init."
 	else when (eq state '&key)
 	       do (return (if (evenp (length arg-asts))
 			      (nconc result arg-asts)
+<<<<<<< HEAD
 			      (values
 			       nil
 			       'odd-keyword-portion-warning)))
@@ -246,6 +259,20 @@ If this is impossible for some reason, a second non-nil value will be returned. 
 This function should not require an environment or system, but it unfortunately does its own conversions (a call to cl:list for &rest, and a constant nil for &optional)."
   (flet ((noinline (&optional (condition t))
 	   (return-from inline-lambda-init (values nil condition)))
+=======
+			      (values nil 'odd-keys)))
+	finally (return
+		  (if (null arg-asts)
+		      result
+		      (values nil 'too-many-arguments)))))
+
+(defun inline-lambda-init (env system lambda-list arg-asts)
+  "This mess takes an environment and system, and then a lambda list and a list of converted arguments, and returns a list of forms that initialize the lambda variables with the arguments.
+If this is impossible for some reason, a second non-nil value will be returned. T indicates that the call is still valid, so this function is declining for some other reason (like not having the semantics implemented). Anything else is an error message of some kind. Currently NOT-ENOUGH-ARGUMENTS or TOO-MANY-ARGUMENTS.
+This function should not require an environment or system, but it unfortunately does its own conversions (a call to cl:list for &rest, and a constant nil for &optional)."
+  (flet ((noinline (&optional (error t))
+	   (return-from inline-lambda-init (values nil error)))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	 (make-list-call (args)
 	   ;; ew.
 	   (let* ((info (cleavir-env:function-info env 'list))
@@ -267,8 +294,12 @@ This function should not require an environment or system, but it unfortunately 
 		   collect (cleavir-ast:make-setq-ast
 			    parameter (first arg-asts))
 		   and do (setf arg-asts (rest arg-asts))
+<<<<<<< HEAD
 	       else do (noinline
 			'not-enough-arguments-style-warning)
+=======
+	         else do (noinline 'not-enough-arguments)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	  else when (eq state '&optional)
 		 if arg-asts
 		   collect (cleavir-ast:make-setq-ast
@@ -301,6 +332,7 @@ This function should not require an environment or system, but it unfortunately 
 	  finally (when (and arg-asts (not rest))
 		    ;; out of parameters; if arg-asts = nil,
 		    ;;  we return normally
+<<<<<<< HEAD
 		    (return
 		      (values
 		       nil
@@ -349,6 +381,29 @@ This function should not require an environment or system, but it unfortunately 
 	       (let ((ret (function-type-return-values ftype)))
 		 (maybe-wrap-the ret ast)))
 	     ;; Basic uninlined call with no type declarations.
+=======
+		    (return (values nil 'too-many-arguments))))))
+
+(defun make-call (info env arguments system)
+  (let ((argument-asts (convert-sequence arguments env system))
+	(ast (cleavir-env:ast info))
+	(ftype (canonicalize-ftype (cleavir-env:type info))))
+    (labels ((err (message)
+	       ;; here is where we would warn and return a
+	       ;;  form that signals an error. but for now,
+	       ;(warn "~a" message)
+	       (declare (ignore message))
+	       (noinline))
+	     (maybe-wrap-return (ast)
+	       ;; fun lisp fact: it's obscure to say that a form
+	       ;;  takes AT MOST n values (or exactly n, etc.)
+	       ;; function types can be more demanding, but THE
+	       ;;  introduces fudge for friendliness's sake.
+	       ;; FIXME: maybe add an EXACTLY-THE AST? THE can
+	       ;;  expand to it (by adding &rest)
+	       (let ((ret (function-type-return-values ftype)))
+		 (maybe-wrap-the ret ast)))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	     (noinline ()
 	       (let ((function-ast
 		       (convert-function info env system)))
@@ -360,8 +415,12 @@ This function should not require an environment or system, but it unfortunately 
 	   (function-type-lambda-list ftype)
 	   argument-asts)
 	(if failure
+<<<<<<< HEAD
 	    ;; return immediately
 	    (violated-type failure)
+=======
+	    (err failure)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 	    (setf argument-asts asts)))
       (if (and (eq (cleavir-env:inline info) 'cl:inline)
 	       (not (null ast)))
@@ -376,7 +435,11 @@ This function should not require an environment or system, but it unfortunately 
 				    (cleavir-ast:lambda-list clone)
 				    argument-asts)
 	      (cond ((eq failure t) (noinline))
+<<<<<<< HEAD
 		    (failure (inline-mismatch failure))
+=======
+		    (failure (err failure))
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
 		    (t
 		     (process-progn
 		      (append

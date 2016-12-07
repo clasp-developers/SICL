@@ -563,7 +563,11 @@
    (%optional-types :initarg :optional :reader optional-types)
    (%rest-type :initarg :rest :reader rest-type)))
 
+<<<<<<< HEAD
 (defun make-the-ast (form-ast required optional rest &key origin (policy *policy*))
+=======
+(defun make-the-ast (form-ast required optional rest &key origin)
+>>>>>>> bca293ee6cf3f73b740daffd54a0c1f0d905198b
   (make-instance 'the-ast
     :origin origin :policy policy
     :form-ast form-ast
