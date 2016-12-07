@@ -44,7 +44,6 @@
 ;;; return value should be considered to be an opaque object, only to
 ;;; be used as the first argument of the functions LIVE-BEFORE and
 ;;; LIVE-AFTER.
-#+(or) ;; this is beach's original code
 (defun liveness (start-node)
   (cleavir-meter:with-meter (m *liveness-meter*)
     (let ((liveness (make-instance 'liveness))
@@ -86,6 +85,9 @@
                  stack (append stack (cleavir-ir:predecessors node)))))))))))
 
 ;; This was modified by Bike to make it more iterative and less recursive
+;;; jackdaniel modified the one above to make it iterative - so I'm featuring out
+;;; Bike's version here - futureme, you can remove it if everything works fine.
+#+(or)
 (defun liveness (start-node)
   (cleavir-meter:with-meter (m *liveness-meter*)
     (let ((liveness (make-instance 'liveness))
