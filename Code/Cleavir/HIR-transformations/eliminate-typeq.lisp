@@ -6,6 +6,8 @@
   (declare (ignore instruction))
   nil)
 
+;;; The original maybe-eliminate code had a bug because it wrote to a lexical location
+#+(or)
 (defmethod maybe-eliminate ((instruction cleavir-ir:typeq-instruction))
   (let* ((cleavir-ir:*policy* (cleavir-ir:policy instruction))
          (object (first (cleavir-ir:inputs instruction)))
@@ -27,6 +29,39 @@
 	  (t
 	   (cleavir-ir:insert-instruction-before fdefinition instruction)
 	   (cleavir-ir:insert-instruction-before call instruction)
+	   (change-class instruction 'cleavir-ir:eq-instruction
+			 :inputs (list boolean-value nil-constant)
+			 :successors
+			 (reverse (cleavir-ir:successors instruction)))))))
+
+;;; Bike made these changes on Dec 8, 2016 - the next sicl rebase should
+;;; switch back to sicl's version
+(defmethod maybe-eliminate ((instruction cleavir-ir:typeq-instruction))
+  (let* ((cleavir-ir:*policy* (cleavir-ir:policy instruction))
+	 (object (first (cleavir-ir:inputs instruction)))
+	 (typep-constant (cleavir-ir:make-constant-input 'typep))
+	 (typep-function (cleavir-ir:new-temporary))
+	 (fdefinition (cleavir-ir:make-fdefinition-instruction
+		       typep-constant typep-function))
+	 (type (cleavir-ir:value-type instruction))
+	 (type-descriptor-constant (cleavir-ir:make-constant-input type))
+	 (values-location (cleavir-ir:make-values-location))
+	 (boolean-value (cleavir-ir:new-temporary))
+	 (call (cleavir-ir:make-funcall-instruction
+		(list typep-function object type-descriptor-constant)
+		(list values-location)))
+	 (mtf (cleavir-ir:make-multiple-to-fixed-instruction
+	       values-location
+	       (list boolean-value)))
+	 (nil-constant (cleavir-ir:make-constant-input 'nil)))
+    (cond ((and (subtypep type 'fixnum) (subtypep 'fixnum type))
+	   (change-class instruction 'cleavir-ir:fixnump-instruction))
+	  ((and (subtypep type 'cons) (subtypep 'cons type))
+	   (change-class instruction 'cleavir-ir:consp-instruction))
+	  (t
+	   (cleavir-ir:insert-instruction-before fdefinition instruction)
+	   (cleavir-ir:insert-instruction-before call instruction)
+	   (cleavir-ir:insert-instruction-before mtf instruction)
 	   (change-class instruction 'cleavir-ir:eq-instruction
 			 :inputs (list boolean-value nil-constant)
 			 :successors
